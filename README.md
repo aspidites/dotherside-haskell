@@ -115,7 +115,7 @@ module Main where
 import Qml
 
 main :: IO ()
-main = runQQuickView "applicaiton.qml"
+main = runQQuickView "application.qml"
 ```
 
 Much better!
