@@ -1,15 +1,11 @@
 module Qml.QApplication 
-  ( exec
-  , runQApplication
+  ( runQApplication
   ) where
 
 import Control.Monad.Reader
 
 import Qml.Types
 import Qml.Raw
-
-exec :: Qml ()
-exec = liftIO qApplicationExec
 
 runQApplication :: Qml () -> IO ()
 runQApplication action = do
@@ -18,7 +14,7 @@ runQApplication action = do
   flip (runReaderT . runQml) engine $ do
 
     action
-    exec
 
+  qApplicationExec
   qQmlApplicationEngineDelete engine
   qApplicationDelete

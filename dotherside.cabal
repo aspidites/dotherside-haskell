@@ -1,6 +1,6 @@
 cabal-version:      3.4
 name:               dotherside
-version:            0.1.0.1
+version:            0.2.0.0
 synopsis:           Haskell bindings to DOtherSide
 -- description:
 license:            MIT

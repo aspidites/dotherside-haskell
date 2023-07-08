@@ -2,13 +2,18 @@ module Qml.QGuiApplication
   ( runQGuiApplication
   ) where
 
+import Control.Monad.Reader
 import Qml.Raw
+import Qml.Types
 
-runQGuiApplication :: IO () -> IO ()
+runQGuiApplication :: Qml () -> IO ()
 runQGuiApplication action = do
   qGuiApplicationCreate
+  engine <- qQmlApplicationEngineCreate
+  flip (runReaderT . runQml) engine $ do
 
-  action
+    action
 
   qGuiApplicationExec
+  qQmlApplicationEngineDelete engine
   qGuiApplicationDelete
