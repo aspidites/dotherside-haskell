@@ -20,6 +20,7 @@ library
     import:           warnings
     exposed-modules: 
       Qml  
+      Qml.Types
       Qml.QApplication
       Qml.QGuiApplication
       Qml.QQmlApplicationEngine
