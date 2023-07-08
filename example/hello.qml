@@ -9,5 +9,3 @@ ApplicationWindow {
     title: "Hello World"
     Component.onCompleted: visible = true
 }
-
-

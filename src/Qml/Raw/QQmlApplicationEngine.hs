@@ -1,23 +1,15 @@
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE TemplateHaskell #-}
-module DOtherSide where
+module Qml.Raw.QQmlApplicationEngine where
 
-import Language.C.Inline qualified as C
 import Foreign.Ptr
 import Foreign.C.String
+import Language.C.Inline qualified as C
 
-import DOtherSide.Context
+import Qml.Raw.Context
 
 C.context (C.baseCtx <> dosContext)
-
 C.include "<DOtherSide/DOtherSide.h>"
-
-qApplicationCreate :: IO ()
-qApplicationCreate = [C.block| 
-  void { 
-    dos_qapplication_create(); 
-  } 
-|]
 
 qQmlApplicationEngineCreate :: IO (Ptr QQmlApplicationEngine)
 qQmlApplicationEngineCreate = [C.block| 
@@ -33,13 +25,6 @@ qQmlApplicationEngineLoadData engine qml = [C.block|
   } 
 |]
 
-qApplicationExec :: IO ()
-qApplicationExec = [C.block|
-  void {
-    dos_qapplication_exec();
-  }
-|]
-
 qQmlApplicationEngineDelete :: Ptr QQmlApplicationEngine -> IO ()
 qQmlApplicationEngineDelete engine = [C.block|
   void {
@@ -47,9 +32,3 @@ qQmlApplicationEngineDelete engine = [C.block|
   }
 |]
 
-qApplicationDelete :: IO ()
-qApplicationDelete = [C.block|
-  void {
-    dos_qapplication_delete();
-  }
-|]

@@ -19,13 +19,25 @@ common warnings
 library
     import:           warnings
     exposed-modules: 
-      DOtherSide
-      DOtherSide.Context
+      Qml  
+      Qml.QApplication
+      Qml.QGuiApplication
+      Qml.QQmlApplicationEngine
+      Qml.QQuickView
+      Qml.QUrl
+      Qml.Raw
+      Qml.Raw.QUrl
+      Qml.Raw.Context
+      Qml.Raw.QApplication
+      Qml.Raw.QGuiApplication
+      Qml.Raw.QQmlApplicationEngine
+      Qml.Raw.QQuickView
     -- other-modules:
     -- other-extensions:
     build-depends:    
         base ^>=4.17.1.0
       , inline-c
+      , mtl
       , containers
     hs-source-dirs:   src
     cc-options: -Wall -O2
@@ -35,9 +47,11 @@ library
 executable example
   import:           warnings
   default-language: GHC2021
-  type:             exitcode-stdio-1.0
+  default-extensions:
+    BlockArguments
   hs-source-dirs:   app
   main-is:          Main.hs
+  -- other-modules:
   build-depends:
       base ^>=4.17.1.0
     , text
