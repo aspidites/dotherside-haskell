@@ -119,3 +119,9 @@ main = runQQuickView "applicaiton.qml"
 ```
 
 Much better!
+
+## Roadmap
+While I'd eventually like to wrap all of DOtherSide, the order of things implemented is prioritized based on the needs of my personal projects. I've also not got any set timeline, so it could take weeks, or months to get where I'd like to be. 
+- [ ] add ability to set root context properties
+- [ ] add the ability to register Haskell types as QML types
+- [ ] experiment with exposing at least part of the Prelude as a QML module
