@@ -1,20 +1,51 @@
 ```haskell
-import Qml
+-- option A
+module Main where
+import Qml (runQQuickView, registerType, addFunction) 
 
-main1 = runQQuickView "application.qml" do
+fact :: Int -> Int
+fact n = if n == 0 then 1 else n * fact(n-1)
+
+main :: IO ()
+main = runQQuickView "application.qml" do
   registerType "Math" 1 0 $ do
     addFunction "factorial" factorial
     addFunction "add" $ \x y -> x + y
+```
 
-main2 = runQQuickView "application.qml" defaultContext
-  { customTypes =
-    { QmlType "Math" 1 0 $ M.fromList 
+```haskell
+-- option B
+module Main where
+import Qml (QmlType(..), QmlContext(customTypes), defaultContext, runQQuickView)
+
+-- defaultContext = QmlContext { customTypes = [ QmlType "Haskell.Prelude" 9 4 [ ("map", map), ...] ] }
+
+fact :: Int -> Int
+fact n = if n == 0 then 1 else n * fact(n-1)
+
+main :: IO ()
+main = runQQuickView "application.qml" defaultContext
+  { customTypes = defaultTypes <>
+    [ QmlType "Math" 1 0 $ M.fromList 
       [ ("factorial", factorial)
       , ("add", \x y -> x + y)
       ]
-    }
+    ]
+```
 
-main3 = runQQuickView 
+```haskell
+-- option C
+module Main where
+import Qml (QmlContext(..), runQQuickView)
+
+-- defaultContext = QmlContext { customTypes = [ QmlType "Haskell.Prelude" 9 4 [ QmlFunction "map" map, ...] ] } 
+
+fact :: Int -> Int
+fact n = if n == 0 then 1 else n * fact(n-1)
+
+
+main :: IO ()
+main = runQQuickView 
   "application.qml" 
   defaultContext
     { customTypes = 
@@ -27,9 +58,11 @@ main3 = runQQuickView
 ```
 
 ```qml
+import QtQuick 6.0
+import Haskell.Prelude 9.2 as P
 import Math 1.0
 
 Text {
-  text: Math.add(Math.factorial(3), 9)
+  text: Math.add(P.sum(P.map(Math.factorial, [4, 9, 1])), 1); // 362906
 }
 ````
