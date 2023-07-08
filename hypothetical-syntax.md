@@ -3,8 +3,8 @@
 module Main where
 import Qml (runQQuickView, registerType, addFunction) 
 
-fact :: Int -> Int
-fact n = if n == 0 then 1 else n * fact(n-1)
+factorial :: Int -> Int
+factorial n = if n == 0 then 1 else n * factorial (n-1)
 
 main :: IO ()
 main = runQQuickView "application.qml" do
@@ -20,8 +20,8 @@ import Qml (QmlType(..), QmlContext(customTypes), defaultContext, runQQuickView)
 
 -- defaultContext = QmlContext { customTypes = [ QmlType "Haskell.Prelude" 9 4 [ ("map", map), ...] ] }
 
-fact :: Int -> Int
-fact n = if n == 0 then 1 else n * fact(n-1)
+factorial :: Int -> Int
+factorial n = if n == 0 then 1 else n * factorial (n-1)
 
 main :: IO ()
 main = runQQuickView "application.qml" defaultContext
@@ -36,13 +36,12 @@ main = runQQuickView "application.qml" defaultContext
 ```haskell
 -- option C
 module Main where
-import Qml (QmlContext(..), runQQuickView)
+import Qml (QmlContext(..), QmlFunction(..), defaultContext, runQQuickView)
 
 -- defaultContext = QmlContext { customTypes = [ QmlType "Haskell.Prelude" 9 4 [ QmlFunction "map" map, ...] ] } 
 
-fact :: Int -> Int
-fact n = if n == 0 then 1 else n * fact(n-1)
-
+factorial :: Int -> Int
+factorial n = if n == 0 then 1 else n * factorial (n-1)
 
 main :: IO ()
 main = runQQuickView 
